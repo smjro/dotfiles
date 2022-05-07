@@ -69,3 +69,4 @@
 (package! org-bullets)
 (package! org-modern)
 (package! affe)
+(package! consult-ghq)

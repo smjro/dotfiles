@@ -12,6 +12,17 @@
       ;; initialize leaf-keywords.el
       (leaf-keywords-init)))
 
+(leaf *encoding
+  :doc "It's time to use UTF-8"
+  :config
+  (set-language-environment "Japanese")
+  (prefer-coding-system 'utf-8))
+
+(leaf *large-file
+  :doc "Adjust large file threshold"
+  :custom
+  (large-file-warning-threshold . 1000000))
+
 (leaf *global-bindings
   :init
   (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
@@ -396,6 +407,37 @@
    ("C-c C-l" . hack-print-diff)
    ("C-c RET" . hack-test-all)
    ("C-c t"   . hack-test-one-sample)))
+
+(leaf markdown-mode
+  :doc "Mafor mode for editing Markdown-formatted text"
+  :mode
+  (("README\\.md\\'" . gfm-mode)
+   ("\\.md\\'"       . markdown-mode))
+  :bind
+  ((:markdown-mode-map
+    ("M-t u" . markdown-toggle-url-hiding)
+    ("M-t m" . markdown-toggle-markup-hiding)))
+  :custom
+  (markdown-hide-urls . nil)  ;; URLの記載を隠すかどうか
+  (markdown-hide-markup . nil)  ;; 見出しの#やboldの*などを隠すかどうか
+  (markdown-list-item-bullets . '("★"))  ;; bulletsの表示を変更
+  (markdown-fontify-code-blocks-natively . t)  ;; コードブロックに色をつける
+  :custom-face
+  (markdown-header-face-1 . '((t (:inherit outline-1 :weight bold :height 1.5))))
+  (markdown-header-face-2 . '((t (:inherit outline-1 :weight normal :height 1.2))))
+  (markdown-header-face-3 . '((t (:inherit outline-1 :weight normal :height 1.1))))
+  (markdown-header-face-4 . '((t (:inherit outline-1 :weight normal))))
+  (markdown-bold-face . '((t (:foreground "#f8f8f2" :weight bold))))
+  (markdown-italic-face . '((t (:foreground "#f8f8f2" :slant italic))))
+  (markdown-header-delimiter-face . '((t (:foreground "#6272a4" :weight normal))))  ;; 見出しの#の色
+  (markdown-link-face . '((t (:foreground "#f1fa8c"))))
+  (markdown-url-face . '((t (:foreground "#6272a4"))))
+  (markdown-list-face . '((t (:foreground "#6272a4"))))
+  (markdown-gfm-checkbox-face . '((t (:foreground "#6272a4"))))
+  (markdown-metadata-value-face . '((t (:foreground "#8995ba"))))
+  (markdown-metadata-key-face . '((t (:foreground "#6272a4"))))
+  (markdown-pre-face . '((t (:foreground "#8be9fd"))))  ;; シングルクォートによるコード表示の色
+  )
 
 (leaf avy
   :doc "Jump to things in tree-style"
