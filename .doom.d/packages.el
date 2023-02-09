@@ -70,3 +70,5 @@
 (package! org-modern)
 (package! affe)
 (package! consult-ghq)
+(package! chatgpt
+  :recipe (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "*.el")))
