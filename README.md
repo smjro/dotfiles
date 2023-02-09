@@ -10,6 +10,7 @@ My emacs settings.
 ```
 cd ~
 git clone https://github.com/smjro/dotfiles.git
+cd dotfiles
 sh ~/dotfiles/deploy.sh
 ~/.emacs.d/bin/doom install
 ```
