@@ -12,6 +12,19 @@
       ;; initialize leaf-keywords.el
       (leaf-keywords-init)))
 
+(leaf exec-path-from-shell
+  :doc "Share PATH from shell environment variables"
+  :url "https://github.com/purcell/exec-path-from-shell"
+  :ensure t
+  :if (and (equal system-type 'darwin) (window-system))
+  :custom
+  (exec-path-from-shell-check-startup-files . nil)
+  (exec-path-from-shell-variables . '("PATH"))
+  :config
+  (exec-path-from-shell-initialize))
+
+(mac-auto-ascii-mode 1)
+
 (leaf *encoding
   :doc "It's time to use UTF-8"
   :config
@@ -26,6 +39,7 @@
 (leaf *global-bindings
   :init
   (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+  (define-key org-mode-map (kbd "C-j") nil)
   :bind
   (("C-j" . set-mark-command)))
 
@@ -202,6 +216,16 @@
   :config (global-anzu-mode +1)
   :custom (anzu-use-migemo  . t)
   :bind ("M-r" . anzu-query-replace-regexp))
+
+(leaf chatgpt
+  :ensure t
+  :config
+  (unless (boundp 'python-interpreter)
+    (defvaralias 'python-interpreter 'python-shell-interpreter))
+  (setq chatgpt-repo-path (expand-file-name "straight/repos/ChatGPT.el/" doom-local-dir))
+  (set-popup-rule! (regexp-quote "*ChatGPT*")
+    :side 'bottom :size .5 :ttl nil :quit t :modeline nil)
+  :bind ("C-c g" . chatgpt-query))
 
 (leaf highlight-indent-guides
   :doc "Display structure for easy viewing"
